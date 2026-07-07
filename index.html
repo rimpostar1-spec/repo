@@ -778,6 +778,12 @@ select option, select optgroup {
     pointer-events: none;
 }
 
+/* Allow text selection/input on interactive elements (critical for touch devices) */
+textarea, input, select, [contenteditable] {
+    user-select: text;
+    -webkit-user-select: text;
+}
+
 /* Mobile Toggle Buttons (Desktop Hidden) */
 .mobile-toggle-btn {
     display: none !important;
@@ -799,7 +805,7 @@ select option, select optgroup {
     display: none;
 }
 
-/* Responsive Media Queries */
+/* ========== Tablet (max-width: 1024px) ========== */
 @media (max-width: 1024px) {
     .mobile-toggle-btn {
         display: flex !important;
@@ -808,7 +814,15 @@ select option, select optgroup {
         font-size: 12px !important;
         padding: 6px 10px !important;
     }
-    
+
+    /* Editor view: single column on tablet/mobile */
+    #editor-view {
+        flex-direction: column !important;
+        padding: 15px !important;
+        gap: 15px !important;
+    }
+
+    /* Drafts sidebar becomes a slide-in drawer */
     .drafts-sidebar {
         position: fixed !important;
         top: 0;
@@ -828,7 +842,8 @@ select option, select optgroup {
     .drafts-sidebar.active {
         transform: translateX(0);
     }
-    
+
+    /* Settings sidebar becomes a slide-in drawer */
     .settings-sidebar {
         position: fixed !important;
         top: 0;
@@ -848,28 +863,31 @@ select option, select optgroup {
     .settings-sidebar.active {
         transform: translateX(0);
     }
-    
+
+    /* Editor takes full width */
     .editor-container {
         flex: 1 !important;
-        width: 100%;
+        width: 100% !important;
+        min-height: 0;
     }
-    
+
+    /* HUD Panel: wrap buttons to fit small screens */
     .hud-panel {
-        width: 90% !important;
+        width: 94% !important;
         max-width: 480px;
         flex-wrap: wrap;
         justify-content: center;
         gap: 6px !important;
         padding: 8px 12px !important;
-        bottom: 12px !important;
+        bottom: 10px !important;
         border-radius: 12px !important;
     }
     .hud-separator {
         display: none !important;
     }
     .hud-btn {
-        width: 32px !important;
-        height: 32px !important;
+        width: 36px !important;
+        height: 36px !important;
         font-size: 11px !important;
         padding: 0 !important;
     }
@@ -878,32 +896,53 @@ select option, select optgroup {
         height: 16px !important;
     }
     .hud-btn-large {
-        width: 38px !important;
-        height: 38px !important;
+        width: 42px !important;
+        height: 42px !important;
     }
     .hud-btn-large svg {
         width: 20px !important;
         height: 20px !important;
     }
+
+    /* Prompter text: smaller on tablet */
+    .prompter-text {
+        font-size: 32px !important;
+        width: 90% !important;
+        line-height: 1.6 !important;
+    }
+
     .prompter-settings-panel {
-        bottom: 115px !important;
+        bottom: 80px !important;
         width: 90%;
         max-width: 300px;
         padding: 12px 15px !important;
         gap: 8px !important;
     }
+
+    /* Focus indicator: thinner on mobile */
+    .focus-indicator {
+        height: 80px !important;
+    }
 }
 
-@media (max-width: 500px) {
-    .app-header {
-        padding: 10px 15px !important;
+/* ========== Mobile Phone (max-width: 600px) ========== */
+@media (max-width: 600px) {
+    /* Header: compact */
+    header {
+        height: 50px !important;
+        padding: 0 12px !important;
     }
-    .app-header .logo {
-        font-size: 15px;
+    .logo {
+        font-size: 16px !important;
     }
-    .app-header .logo span {
+    .logo span {
         display: none;
     }
+    .header-actions {
+        gap: 6px !important;
+    }
+
+    /* Hide button text, show only icons */
     #btn-import span, #btn-save span {
         display: none;
     }
@@ -912,22 +951,112 @@ select option, select optgroup {
     }
     .mobile-toggle-btn {
         padding: 6px 8px !important;
-        font-size: 11px !important;
+        font-size: 10px !important;
     }
+    .mobile-toggle-btn span {
+        display: none;
+    }
+
+    /* Editor view: tight padding */
+    #editor-view {
+        padding: 8px !important;
+        gap: 8px !important;
+    }
+
+    /* Editor header */
+    .editor-header {
+        padding: 10px 12px !important;
+    }
+    .editor-title {
+        font-size: 13px !important;
+    }
+
+    /* Textarea: readable on mobile */
+    textarea {
+        font-size: 15px !important;
+        padding: 12px !important;
+        line-height: 1.5 !important;
+    }
+
+    /* Editor footer: stack vertically */
     .editor-footer {
         flex-direction: column;
         gap: 8px;
         align-items: stretch;
-        padding: 10px 15px !important;
+        padding: 8px 12px !important;
     }
     .editor-stats {
         justify-content: space-between;
         font-size: 11px !important;
-        gap: 10px !important;
+        gap: 8px !important;
+        flex-wrap: wrap;
     }
     .btn-dictate {
         width: 100%;
         justify-content: center;
+    }
+
+    /* Prompter text: even smaller on phones */
+    .prompter-text {
+        font-size: 24px !important;
+        width: 92% !important;
+        line-height: 1.5 !important;
+    }
+
+    /* HUD buttons: smaller */
+    .hud-panel {
+        width: 96% !important;
+        bottom: 6px !important;
+        padding: 6px 8px !important;
+        gap: 4px !important;
+        border-radius: 10px !important;
+    }
+    .hud-btn {
+        width: 30px !important;
+        height: 30px !important;
+    }
+    .hud-btn svg {
+        width: 14px !important;
+        height: 14px !important;
+    }
+    .hud-btn-large {
+        width: 36px !important;
+        height: 36px !important;
+    }
+    .hud-btn-large svg {
+        width: 18px !important;
+        height: 18px !important;
+    }
+
+    /* Back button in HUD */
+    #btn-back {
+        padding: 6px 12px !important;
+        font-size: 12px !important;
+    }
+
+    /* Prompter settings panel */
+    .prompter-settings-panel {
+        bottom: 65px !important;
+        width: 92% !important;
+        min-width: unset !important;
+    }
+
+    /* Prompter container padding */
+    .prompter-container {
+        padding: 30vh 0 !important;
+    }
+
+    /* Focus indicator */
+    .focus-indicator {
+        height: 60px !important;
+    }
+
+    /* Eyeline arrows: closer to edge on mobile */
+    .eyeline-arrow.left-arrow {
+        left: 8px !important;
+    }
+    .eyeline-arrow.right-arrow {
+        right: 8px !important;
     }
 }
     </style>
